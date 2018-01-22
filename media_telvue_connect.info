@@ -1,0 +1,10 @@
+name = Media: Telvue Connect
+description = Provides Telvue support for File Entity and the Media module.
+package = "Media"
+core = 7.x
+files[] = media_telvue_connect.module
+files[] = includes/MediaInternetTelvueConnectHandler.inc
+files[] = includes/MediaTelvueConnectStreamWrapper.inc
+files[] = includes/media_telvue_connect.formatters.inc
+dependencies[] = media
+dependencies[] = media_internet

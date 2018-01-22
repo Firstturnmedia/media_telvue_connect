@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Media: Telvue Connect module.
+ */
+
+// @todo test that this actually works
+/**
+ * Implement hook_uninstall().
+ */
+function media_telvue_connect_uninstall() {
+  drupal_load('module', 'media_telvue_connect');
+
+  foreach (media_telvue_connect_variable_default() as $variable => $value) {
+    media_telvue_connect_variable_del($variable);
+  }
+  return array(array('success' => TRUE, 'query' => "Deleted all variables in the Media: Telvue Connect namespace."));
+}

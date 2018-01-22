@@ -1,0 +1,78 @@
+<?php
+
+/**
+ * @file media_telvue_connect/media_telvue_connect.module
+ *
+ * Media: Telvue Connect provides a stream wrapper and formatters for videos provided
+ * by Telvue, available at http://telvue.com/.
+ */
+
+// Hooks and callbacks for integrating with File Entity module for display.
+include_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'media_telvue_connect') . '/includes/media_telvue_connect.formatters.inc';
+
+/**
+ * Implements hook_media_internet_providers().
+ */
+function media_telvue_connect_media_internet_providers() {
+  $info['MediaInternetTelvueConnectHandler'] = array(
+    'title' => t('Telvue Connect'),
+  );
+
+  return $info;
+}
+
+/**
+ * Implements hook_stream_wrappers().
+ */
+function media_telvue_connect_stream_wrappers() {
+  return array(
+    'telvue_connect' => array(
+      'name' => t('Telvue Connect videos'),
+      'class' => 'MediaTelvueConnectStreamWrapper',
+      'description' => t('Videos provided by Telvue Connect.'),
+      'type' => STREAM_WRAPPERS_READ_VISIBLE,
+    ),
+  );
+}
+
+/**
+ * Implements hook_theme($existing, $type, $theme, $path).
+ */
+function media_telvue_connect_theme($existing, $type, $theme, $path) {
+  return array(
+    'media_telvue_connect_video' => array(
+      'variables' => array('uri' => NULL, 'options' => array(), 'node' => NULL),
+      'file' => 'media_telvue_connect.theme.inc',
+      'path' => $path . '/themes',
+      'template' => 'media-telvue-connect-video',
+    ),
+  );
+}
+
+/**
+ * Implements hook_media_parse().
+ *
+ * @todo This hook should be deprecated. Refactor Media module to not call it
+ *   any more, since media_internet should be able to automatically route to the
+ *   appropriate handler.
+ */
+function media_telvue_connect_media_parse($embed_code) {
+  $handler = new MediaInternetTelvueConnectHandler($embed_code);
+  return $handler->parse($embed_code);
+}
+
+/**
+ * Implements hook_file_mimetype_mapping_alter().
+ */
+function media_telvue_connect_file_mimetype_mapping_alter(&$mapping) {
+  $mapping['mimetypes'][] = 'video/telvue_connect';
+}
+
+/**
+ * Implements hook_ctools_plugin_api().
+ */
+function media_telvue_connect_ctools_plugin_api($module, $api) {
+  if ($module == 'file_entity' && $api == 'file_default_displays') {
+    return array('version' => 1);
+  }
+}
