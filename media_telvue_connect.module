@@ -26,7 +26,7 @@ function media_telvue_connect_media_internet_providers() {
  */
 function media_telvue_connect_stream_wrappers() {
   return array(
-    'telvue_connect' => array(
+    'connect' => array(
       'name' => t('Telvue Connect videos'),
       'class' => 'MediaTelvueConnectStreamWrapper',
       'description' => t('Videos provided by Telvue Connect.'),
@@ -65,7 +65,7 @@ function media_telvue_connect_media_parse($embed_code) {
  * Implements hook_file_mimetype_mapping_alter().
  */
 function media_telvue_connect_file_mimetype_mapping_alter(&$mapping) {
-  $mapping['mimetypes'][] = 'video/telvue_connect';
+  $mapping['mimetypes'][] = 'video/connect';
 }
 
 /**

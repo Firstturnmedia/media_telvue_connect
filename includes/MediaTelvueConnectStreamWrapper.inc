@@ -28,7 +28,7 @@ class MediaTelvueConnectStreamWrapper extends MediaReadOnlyStreamWrapper {
   }
 
   static function getMimeType($uri, $mapping = NULL) {
-    return 'video/telvue_connect';
+    return 'video/connect';
   }
 
   function getTarget($f) {
@@ -57,7 +57,7 @@ class MediaTelvueConnectStreamWrapper extends MediaReadOnlyStreamWrapper {
         @copy($this->getOriginalThumbnailPath(), $local_path);
       }
     }
-    
+
     return $local_path;
   }
 }

@@ -86,7 +86,7 @@ class MediaInternetTelvueConnectHandler extends MediaInternetBaseHandler {
         $size = '/width/' . $width . '/height/' . $height;
       }
 
-      return file_stream_wrapper_uri_normalize('telvue_connect://id/' . $id . $size . '/video/' . $video);
+      return file_stream_wrapper_uri_normalize('connect://id/' . $id . $size . '/video/' . $video);
     }
   }
 
@@ -130,7 +130,7 @@ class MediaInternetTelvueConnectHandler extends MediaInternetBaseHandler {
       //if request wasn't successful, create object for return to avoid errors
       $entry = new SimpleXMLElement();
     }
-    
+
     return $entry;
   }
 

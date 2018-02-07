@@ -21,7 +21,7 @@ function media_telvue_connect_file_formatter_info() {
     ),
     'view callback' => 'media_telvue_connect_file_formatter_video_view',
     'settings callback' => 'media_telvue_connect_file_formatter_video_settings',
-    'mime types' => array('video/telvue_connect'),
+    'mime types' => array('video/connect'),
   );
 
   // Telvue connect image
@@ -33,7 +33,7 @@ function media_telvue_connect_file_formatter_info() {
     ),
     'view callback' => 'media_telvue_connect_file_formatter_image_view',
     'settings callback' => 'media_telvue_connect_file_formatter_image_settings',
-    'mime types' => array('video/telvue_connect'),
+    'mime types' => array('video/connect'),
   );
 
   return $formatters;
@@ -45,7 +45,7 @@ function media_telvue_connect_file_formatter_info() {
 function media_telvue_connect_file_formatter_video_view($file, $display, $langcode) {
   $scheme = file_uri_scheme($file->uri);
 
-  if ($scheme == 'telvue_connect') {
+  if ($scheme == 'connect') {
     $element = array(
       '#theme' => 'media_telvue_connect_video',
       '#uri' => $file->uri,
@@ -147,8 +147,8 @@ function _telvue_connect_validate_jsapi_domain($element, &$form_state, $form) {
  */
 function media_telvue_connect_file_formatter_image_view($file, $display, $langcode) {
   $scheme = file_uri_scheme($file->uri);
-  
-  if ($scheme == 'telvue_connect') {
+
+  if ($scheme == 'connect') {
     $wrapper = file_stream_wrapper_get_instance_by_uri($file->uri);
     $image_style = $display['settings']['image_style'];
     $valid_image_styles = image_style_options(FALSE);
