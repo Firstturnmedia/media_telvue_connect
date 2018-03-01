@@ -11,6 +11,35 @@
 include_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'media_telvue_connect') . '/includes/media_telvue_connect.formatters.inc';
 
 /**
+ * Implements hook_permission
+ */
+function media_telvue_connect_permission() {
+  return array(
+    'administer media telvue connect' => array(
+    'title' => t('Media Telvue Connect'),
+    'description' => t('Provides access to change Media Telvue Connect API Settings')
+  ));
+}
+
+/**
+ * Implements hook_menu().
+ */
+function media_telvue_connect_menu() {
+  $items = array();
+
+  $items['admin/config/media-telvue-connect'] = array(
+    'title' => 'Media Telvue Connect',
+    'description' => 'Configure Media Telvue Connect',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('media_telvue_connect_settings_form'),
+    'access arguments' => array('administer media telvue connect'),
+    'file' => 'media_telvue_connect.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
  * Implements hook_media_internet_providers().
  */
 function media_telvue_connect_media_internet_providers() {

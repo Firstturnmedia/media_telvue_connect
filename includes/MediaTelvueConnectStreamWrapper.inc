@@ -36,9 +36,31 @@ class MediaTelvueConnectStreamWrapper extends MediaReadOnlyStreamWrapper {
   }
 
   function getOriginalThumbnailPath() {
+    $access_key = variable_get('media_telvue_connect_access_key', FALSE);
+    $secret_passphrase = variable_get('media_telvue_connect_secret_passphrase', FALSE);
+
+    // Get parts
     $parts = $this->get_parameters();
-    //http://videoplayer.telvue.com/thumbnails/134038.jpg
-    return 'http://origin.peg.tv/thumbnails/'. check_plain($parts['video']) .'.jpg';
+
+    $connect_url = 'https://connect.telvue.com/api/v2/media/' . check_plain($parts['video']) . '.json';
+
+    $options = array(
+      'headers' => array(
+        'CONNECT-ACCESS-KEY' => $access_key,
+        'CONNECT-SECRET-PASSPHRASE' => $secret_passphrase,
+      ),
+    );
+
+    $response = drupal_http_request($connect_url, $options);
+
+    if (!isset($response->error)) {
+      $data = drupal_json_decode($response->data);
+      return $data['medium']['thumbnail_large'];
+    }
+    else {
+      throw new Exception("Error Processing Request. (Error: {$response->code}, {$response->error})");
+      return;
+    }
   }
 
   function getLocalThumbnailPath() {
